@@ -1,0 +1,464 @@
+@import url('@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css');
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Set the height of the main container to the viewport height */
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  overflow-y: hidden; /* Hide the main container scrollbar */
+}
+
+.sidebar {
+  overflow-y: auto; /* Enable the sidebar scrollbar */
+}
+
+.sidebar-container
+{
+  overflow-y: auto;
+}
+
+.sidebar-container::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+}
+.sidebar-container::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #A0A8A9;
+}
+
+.sidebar-container::-webkit-scrollbar-track:hover {
+  background-color: #A0A8A9;
+}
+
+.sidebar-container::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+/* .sidebar-container::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9c27b0;
+} */
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background-color: #62A34B;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:active {
+  background-color: #62A34B;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto; /* Enable the main content scrollbar */
+}
+
+.map-container {
+  width: 55vw;
+  height: 800px;
+  border-radius: 20px;
+}
+
+.map-container-dynamic {
+  width: 53vw;
+  height: 800px;
+  border-radius: 20px;
+}
+
+.mapboxgl-canvas
+{
+  height: 800px !important;
+}
+
+.sidebar-map {
+  background-color: rgb(35 55 75 / 90%);
+  color: #fff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+}
+
+.mapboxgl-marker
+{
+  display: none;
+}
+
+.globalMarker
+{
+  display: block;
+}
+
+.globalLiveMarker
+{
+  display: block;
+}
+
+.droneactive, .dronecompleted
+{
+  background-color: limegreen;
+  border-radius: 50%;
+}
+
+.droneconnected, .dronein
+{
+  background-color: yellow;
+  border-radius: 50%;
+}
+
+.dronestopped, .droneplanned
+{
+  background-color: #ff9800;
+  border-radius: 50%;
+  /* animation: pulse 1s infinite alternate; */
+}
+
+.dronerepair, .dronefailed
+{
+  background-color: #e70909;
+  border-radius: 50%;
+}
+
+.dronecharging
+{
+  background-color: darkmagenta;
+  border-radius: 50%;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.square1 {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+}
+
+.mapboxgl-popup-content
+{
+  height: 100px;
+  /* background-color: dodgerblue !important; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  padding: 1em;
+}
+
+.mapboxgl-popup-content p
+{
+  color: #fff;
+}
+
+.mapboxgl-popup-content p.markerDescTitle
+{
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.mapboxgl-popup-content p.desc
+{
+  font-size: 14px;
+}
+
+.mapboxgl-popup-content p.missionIdClass
+{
+  font-weight: bold;
+  font-size: 18px;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+/* .mapboxgl-popup-tip
+{
+  border-top-color: dodgerblue !important;
+} */
+
+.mapboxgl-popup
+{
+  min-width: 200px;
+}
+
+.mapboxgl-popup-close-button
+{
+  font-size: 30px;
+  margin: 0 10px;
+  color: #fff;
+}
+
+.trackDroneList::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+}
+.trackDroneList::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #A0A8A9;
+}
+
+.trackDroneList::-webkit-scrollbar-track:hover {
+  background-color: #A0A8A9;
+}
+
+.trackDroneList::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+/* .trackDroneList::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #DE3ACA;
+} */
+
+.trackDroneList::-webkit-scrollbar-thumb:hover {
+  background-color: #62A34B;
+}
+
+.trackDroneList::-webkit-scrollbar-thumb:active {
+  background-color: #62A34B;
+}
+
+/* Live Notifications */
+.liveNotifContainer
+{
+  overflow: auto;
+  max-height: 800px;
+}
+
+.liveNotifContainer::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+}
+.liveNotifContainer::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #A0A8A9;
+}
+
+.liveNotifContainer::-webkit-scrollbar-track:hover {
+  background-color: #A0A8A9;
+}
+
+.liveNotifContainer::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+.liveNotifContainer::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #DE3ACA;
+}
+
+.liveNotifContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #62A34B;
+}
+
+.liveNotifContainer::-webkit-scrollbar-thumb:active {
+  background-color: #62A34B;
+}
+
+.messageBox
+{
+  position: relative;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.messageBox:before
+{
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px; */
+}
+
+.messageBox.low-severity:before
+{
+  border-left: 8px solid #73BD07;
+}
+
+.messageBox.medium-severity:before
+{
+  border-left: 8px solid #f0a40d;
+}
+
+.messageBox.high-severity:before
+{
+  border-left: 8px solid #e70909;
+}
+
+.messageBox.critical-severity:before
+{
+  border-left: 8px solid #580101;
+}
+
+/* Track Mission Dialog Styles */
+/* .MuiDialog-paper
+{
+  background-color: #727681 !important;
+} */
+
+.MuiTablePagination-selectLabel
+{
+  font-size: 16px !important;
+}
+
+.MuiTablePagination-displayedRows
+{
+  font-size: 16px !important;
+}
+
+.Mui-focusVisible
+{
+  background-color: transparent !important;
+}
+
+.MuiTooltip-tooltip
+{
+  margin: 0 !important;
+  font-size: 1em !important;
+}
+
+@keyframes pulse {
+  from {
+      transform: scale(1);
+  }
+  to {
+      transform: scale(1.1);
+  }
+}
+.configureDialogContainer
+{
+  overflow-y: auto;
+}
+
+.configureDialogContainer::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+}
+.configureDialogContainer::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #A0A8A9;
+}
+
+.configureDialogContainer::-webkit-scrollbar-track:hover {
+  background-color: #A0A8A9;
+}
+
+.configureDialogContainer::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+/* .sidebar-container::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9c27b0;
+} */
+
+.configureDialogContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #62A34B;
+}
+
+.configureDialogContainer::-webkit-scrollbar-thumb:active {
+  background-color: #62A34B;
+}
+
+.swiper-slide-active img
+{
+  width: 450px;
+  height: 450px;
+}
+
+.swiper-button-next, .swiper-button-prev
+{
+  color: unset;
+}
+
+.MuiPickersDay-root
+{
+  font-size: 1rem !important;
+}
+
+.MuiDayCalendar-weekDayLabel
+{
+  font-size: 1rem !important;
+}
+
+.MuiPickersCalendarHeader-label
+{
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+.MuiMenuItem-gutters
+{
+  font-size: 1rem !important;
+}
+
+.MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+}
+.MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #A0A8A9;
+}
+
+.MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar-track:hover {
+  background-color: #A0A8A9;
+}
+
+.MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+
+/* .MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar-thumb:hover {
+  background-color: #62A34B;
+}
+
+.MuiMultiSectionDigitalClock-root:hover::-webkit-scrollbar-thumb:active {
+  background-color: #62A34B;
+} */
+
+.MuiPickersDay-root.Mui-selected
+{
+  background-color: #6870fa !important;
+  color: #fff !important;
+}
+
+.MuiMenuItem-gutters.Mui-selected
+{
+  background-color: #6870fa !important;
+  color: #fff !important;
+}
+
+.MuiPickersLayout-actionBar button
+{
+  background-color: #6870fa !important;
+  color: #fff !important;
+  font-size: 1em;
+}

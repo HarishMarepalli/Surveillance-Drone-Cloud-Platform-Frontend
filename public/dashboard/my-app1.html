@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+
+    <title>Missions | SurvDrone Cloud </title>
+    <link rel="shortcut icon" type="image/ico" href="/static/favicon.ico">
+
+    <link href="/static/vendor/fontawesome-free/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/CACHE/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/CACHE/css/dataTables.bootstrap4.custom.css" type="text/css">
+    <link rel="stylesheet" href="/static/CACHE/css/scroll-to-top.css" type="text/css">
+    <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.105.1/Build/Cesium/Widgets/widgets.css">
+    <link rel="stylesheet" href="/static/CACHE/css/cesium_viewer.css" type="text/css">
+    <link rel="stylesheet" href="/static/CACHE/css/mission_menu.css" type="text/css">
+    <link rel="stylesheet" href="/static/CACHE/css/cesium_integrations.css" type="text/css">
+
+    <!--<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-D3FX67VS7S&amp;l=dataLayer&amp;cx=c"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-166876403-1"></script>-->
+    <script>window.dataLayer = window.dataLayer || [];
+
+                function gtag() {
+                    dataLayer.push(arguments)
+                };
+                gtag('js', new Date());
+                gtag('config', 'UA-166876403-1');</script>
+
+
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.105.1/Build/Cesium/Cesium.js"></script>
+
+
+    <style>
+        .cesium-credit-lightbox-overlay {
+            display: none;
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(80, 80, 80, 0.8);
+        }
+
+        .cesium-credit-lightbox {
+            background-color: #303336;
+            color: #ffffff;
+            position: relative;
+            min-height: 100px;
+            margin: auto;
+        }
+
+            .cesium-credit-lightbox > ul > li a, .cesium-credit-lightbox > ul > li a:visited {
+                color: #ffffff;
+            }
+
+                .cesium-credit-lightbox > ul > li a:hover {
+                    color: #48b;
+                }
+
+            .cesium-credit-lightbox.cesium-credit-lightbox-expanded {
+                border: 1px solid #444;
+                border-radius: 5px;
+                max-width: 370px;
+            }
+
+            .cesium-credit-lightbox.cesium-credit-lightbox-mobile {
+                height: 100%;
+                width: 100%;
+            }
+
+        .cesium-credit-lightbox-title {
+            padding: 20px 20px 0 20px;
+        }
+
+        .cesium-credit-lightbox-close {
+            font-size: 18pt;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 6px;
+            color: #ffffff;
+        }
+
+            .cesium-credit-lightbox-close:hover {
+                color: #48b;
+            }
+
+        .cesium-credit-lightbox > ul {
+            margin: 0;
+            padding: 12px 20px 12px 40px;
+            font-size: 13px;
+        }
+
+            .cesium-credit-lightbox > ul > li {
+                padding-bottom: 6px;
+            }
+
+                .cesium-credit-lightbox > ul > li * {
+                    padding: 0;
+                    margin: 0;
+                }
+
+        .cesium-credit-expand-link {
+            padding-left: 5px;
+            cursor: pointer;
+            text-decoration: underline;
+            color: #ffffff;
+        }
+
+            .cesium-credit-expand-link:hover {
+                color: #48b;
+            }
+
+        .cesium-credit-text {
+            color: #ffffff;
+        }
+
+        .cesium-credit-textContainer *, .cesium-credit-logoContainer * {
+            display: inline;
+        }
+    </style>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/53/14/common.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/53/14/util.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/53/14/geocoder.js"></script>
+</head>
+
+<body id="page-top">
+  
+  <div id="layoutSidenav">
+    
+     <div id="layoutSidenav_content">
+        <main class="mb-5">
+           <div id="content-wrapper">
+              <div class="container-fluid">
+                 <template id="base-mission-item">
+                    <div class="mission-item">
+                       <div class="d-flex justify-content-between align-items-center">
+                           <div class="title">
+                              <span class="point-id"></span> <span class="point-name"></span>
+                           </div>
+                           <i class="fas fa-trash delete-icon"></i>
+                       </div>
+                       <div class="collapse spoiler show">
+                          <!--<select class="custom-select mt-2 command">
+                             <option value="waypoint">Waypoint</option>
+                             <option value="loiter">Loiter</option>
+                             <option value="takeoff">Takeoff</option>
+                             <option value="land">Landing</option>
+                             <option value="changeSpeed">Change speed</option>
+                             <option value="roiLocation">ROI</option>
+                             <option value="roiDisable">Disable ROI</option>
+                             <option value="jump">Jump To Item</option>
+                             <option value="delay">Delay</option>
+                             <option value="vtolTransition">VTOL Transition</option>
+                             <option value="vtolTakeoff">VTOL Takeoff</option>
+                             <option value="vtolLand">VTOL Land</option>
+                             <option value="startVideoCapture">Start Video Capture</option>
+                             <option value="stopVideoCapture">Stop Video Capture</option>
+                             <option value="startImageCapture">Start Image Capture</option>
+                             <option value="stopImageCapture">Stop Image Capture</option>
+                             <option value="cameraConfig">Camera Config</option>
+                          </select>-->
+                          <div class="mission-item-content"></div>
+                          <!--<div class="mission-item-controls">
+                             <div class="row">
+                                 <button class="col-12">Land</button>
+                             </div>
+                          </div>-->
+                        </div>
+                    </div>
+                 </template>
+                 <template id="nav-items">
+                  <div class="row">
+                     <div class="col-6 align-items-center">
+                           <div class="row">
+                              <div class="col-2">
+                                 <span>Lat</span>
+                              </div>
+                              <div class="col-10">
+                                 <input type="text" class="lat">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-6 align-items-center">
+                           <div class="row">
+                              <div class="col-2">
+                                 <span>Lon</span>
+                              </div>
+                              <div class="col-10">
+                                 <input type="text" class="lon">
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                       <div class="col-2">
+                          <span>Altitude</span>
+                       </div>
+                       <div class="col-8 counter">
+                          <button tabindex="-1" class="d-flex justify-content-center align-items-center altitude-minus">-</button>
+                          <input value="" type="text" class="altitude">
+                          <button tabindex="-1" class="d-flex justify-content-center align-items-center altitude-plus">+</button>
+                       </div>
+                       <div class="col-2">
+                          <span>m</span>
+                       </div>
+                    </div>
+                    
+                 </template>
+                 <template id="waypoint">
+                     <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Delay</span>
+                        </div>
+                        <div class="col-8 counter">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center delay-minus">-</button>
+                           <input value="" type="text" class="delay">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center delay-plus">+</button>
+                        </div>
+                        <div class="col-2">
+                           <span>s</span>
+                        </div>
+                     </div>
+
+                     <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Speed</span>
+                        </div>
+                        <div class="col-8 counter">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-minus">-</button>
+                           <input value="" type="text" class="speed">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-plus">+</button>
+                        </div>
+                     </div>
+
+                     <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>HitRad</span>
+                        </div>
+                        <div class="col-8 counter">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center wp-radius-minus">-</button>
+                           <input value="" type="text" class="wp-radius">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center wp-radius-plus">+</button>
+                        </div>
+                     </div>
+
+                     <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Camera</span>
+                        </div>
+                        <div class="col-8">
+                           <select class="drone-id-select custom-select camera-action">
+                              <option value="0">No action</option>
+                              <option value="1">Take Photo</option>
+                              <option value="2">Start Video</option>
+                              <option value="3">Stop Video</option>
+                           </select>
+                        </div>
+                     </div>
+
+                    <!--<div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Hold Time</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="hold-time" type="text">
+                             </div>
+                             <div class="col-2">
+                                <span>Heading</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="heading" type="text">
+                             </div>
+                          </div>
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Accept Radius</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="accept-radius" type="text">
+                             </div>
+                             <div class="col-2">
+                                <span>Pass Radius</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="pass-radius" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>-->
+                 </template>
+                 <template id="loiter">
+                    <div class="row align-items-center">
+                       <div class="col-7">
+                          <span>Transition to</span>
+                       </div>
+                       <div class="col-5">
+                          <select class="custom-select loiter-type">
+                             <option value="unlim">Unlimited</option>
+                             <option value="turns">Turns</option>
+                             <option value="time">Time</option>
+                             <option value="to_alt">To alt</option>
+                          </select>
+                       </div>
+                    </div>
+                    <div class="row align-items-center">
+                       <div class="col-2">
+                          <span>Radius</span>
+                       </div>
+                       <div class="col-10">
+                          <input type="text" class="radius">
+                       </div>
+                    </div>
+                    <div class="row align-items-center" hidden="">
+                       <div class="col-7">
+                          <span>Loiter exit mode</span>
+                       </div>
+                       <div class="col-5">
+                          <select class="custom-select exit-mode">
+                             <option value="1">To next waypoint</option>
+                             <option value="0">Any direction</option>
+                          </select>
+                       </div>
+                    </div>
+                    <div class="row align-items-center" hidden="">
+                       <div class="col-2">
+                          <span>Turns</span>
+                       </div>
+                       <div class="col-10">
+                          <input type="text" class="turns">
+                       </div>
+                    </div>
+                    <div class="row align-items-center" hidden="">
+                       <div class="col-2">
+                          <span>Time</span>
+                       </div>
+                       <div class="col-10">
+                          <input type="text" class="time">
+                       </div>
+                    </div>
+                 </template>
+                 <template id="takeoff">
+                    <!--<div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>-->
+                    <!--<div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Heading</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="heading" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>-->
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Delay</span>
+                        </div>
+                        <div class="col-8 counter">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center delay-minus">-</button>
+                           <input value="" type="text" class="delay">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center delay-plus">+</button>
+                        </div>
+                        <div class="col-2">
+                           <span>s</span>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Speed</span>
+                        </div>
+                        <div class="col-8 counter">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-minus">-</button>
+                           <input value="" type="text" class="speed">
+                           <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-plus">+</button>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                       <div class="col-2">
+                          <span>Heading</span>
+                       </div>
+                       <div class="col-4">
+                          <input class="heading" type="text">
+                       </div>
+                    </div>
+                 </template>
+                 <template id="land">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-6">
+                                <span>Abort alt height</span>
+                             </div>
+                             <div class="col-6">
+                                <input class="abort-alt" type="text">
+                             </div>
+                          </div>
+                          <div class="row align-items-center">
+                             <div class="col-7">
+                                <span>Precision land mode</span>
+                             </div>
+                             <div class="col-5">
+                                <select class="custom-select land-mode" disabled="">
+                                   <option value="0">Normal landing</option>
+                                   <option value="1">Opportunistic</option>
+                                   <option value="2">Requiered</option>
+                                </select>
+                             </div>
+                          </div>
+                          <div class="row align-items-center">
+                             <div class="col-4">
+                                <span>Heading</span>
+                             </div>
+                             <div class="col-8">
+                                <input class="heading" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="change-speed">
+                    <div class="row align-items-center">
+                       <div class="col-2">
+                          <span>Speed</span>
+                       </div>
+                       <div class="col-10">
+                          <input type="text" class="speed">
+                       </div>
+                    </div>
+                    <div class="row align-items-center">
+                       <div class="col-7">
+                          <span>Speed Type</span>
+                       </div>
+                       <div class="col-5">
+                          <select class="custom-select speed-type">
+                             <option value="0">Airspeed</option>
+                             <option value="1">Ground Speed</option>
+                             <option value="2">Climb Speed</option>
+                             <option value="3">Descent Speed</option>
+                          </select>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="delay">
+                    <div class="row align-items-center">
+                       <div class="col-2">
+                          <span>Delay</span>
+                       </div>
+                       <div class="col-10">
+                          <input type="text" class="delay">
+                       </div>
+                    </div>
+                 </template>
+                 <template id="jump">
+                    <div class="row align-items-center">
+                       <div class="col-3">
+                          <span>To Item</span>
+                       </div>
+                       <div class="col-3">
+                          <input type="text" class="to-item">
+                       </div>
+                       <div class="col-3">
+                          <span>Repeat Times</span>
+                       </div>
+                       <div class="col-3">
+                          <input type="text" class="repeat">
+                       </div>
+                    </div>
+                 </template>
+                 <template id="start-video-capture">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-4">
+                                <span>Camera ID</span>
+                             </div>
+                             <div class="col-8">
+                                <input class="stream-id" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="stop-video-capture">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-4">
+                                <span>Camera ID</span>
+                             </div>
+                             <div class="col-8">
+                                <input class="stream-id" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="start-image-capture">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Interval</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="interval" type="text">
+                             </div>
+                             <div class="col-2">
+                                <span>Total Images</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="total-images" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="stop-image-capture"></template>
+                 <template id="camera-config"></template>
+                 <template id="rtl"></template>
+                 <template id="roi-location">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Gimbal Device</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="gimbal-device" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="roi-disable">
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-2">
+                                <span>Gimbal Device</span>
+                             </div>
+                             <div class="col-4">
+                                <input class="gimbal-device" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="vtol-transition">
+                    <div class="row align-items-center">
+                       <div class="col-7">
+                          <span>Transition to</span>
+                       </div>
+                       <div class="col-5">
+                          <select class="custom-select transition-mode">
+                             <option value="4">Plane</option>
+                             <option value="3">Copter</option>
+                          </select>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="vtol-takeoff">
+                    <div class="row align-items-center">
+                       <div class="col-5">
+                          <span>Transition heading</span>
+                       </div>
+                       <div class="col-7">
+                          <select class="custom-select transition-heading">
+                             <option value="nextWp">Next Waypoint</option>
+                             <option value="takeoff">Takeoff angle</option>
+                             <option value="parameter">Specified Parameter</option>
+                             <option value="any">To the wind</option>
+                          </select>
+                       </div>
+                    </div>
+                    <div class="row align-items-center">
+                       <div class="col-4">
+                          <span>Heading</span>
+                       </div>
+                       <div class="col-8">
+                          <input class="heading" type="text">
+                       </div>
+                    </div>
+                 </template>
+                 <template id="vtol-land">
+                    <div class="row align-items-center">
+                       <div class="col-7">
+                          <span>Transition heading</span>
+                       </div>
+                       <div class="col-5">
+                          <select class="custom-select land-behaviour">
+                             <option value="fwDescent">FlyWing Descent</option>
+                             <option value="copterDescent">Copter Descent</option>
+                             <!--<option value="any">Current</option>-->
+                          </select>
+                       </div>
+                    </div>
+                    <div class="row extra-title">
+                       <span class="col-10">Extra Params</span>
+                       <i class="col-2 fa-solid fa-angles-down"></i>
+                    </div>
+                    <div class="collapse spoiler">
+                       <div class="extra-params">
+                          <div class="row align-items-center">
+                             <div class="col-4">
+                                <span>Approach Altitude</span>
+                             </div>
+                             <div class="col-8">
+                                <input class="approach-alt" type="text">
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </template>
+                 <template class="field-hint">
+                    <div class="relative mx-2 validation-hint">
+                       <div class="bg-black text-white text-xs rounded py-1 px-4 right-0 bottom-full">
+                          <svg class="absolute text-black h-2 right-0 mr-3 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
+                             <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                          </svg>
+                       </div>
+                    </div>
+                 </template>
+                 <template id="mission-menu">
+                    <form class="mission-form" action="/missions/create/" method="post" enctype="multipart/form-data">
+                       <!--<input type="hidden" name="csrfmiddlewaretoken" value="X08jadcCC4SpC54jnUfwE8JLkVmUezhDOXtYEZPRvklECtnIbmgTE4eWL0UkqknB">-->
+                       <div class="mission-tag mission-menu-tag">
+                          <div class="mission-collapse closed">
+                             <i class="fas fa-regular fa-chevron-right"></i>
+                          </div>
+                       </div>
+                       <div class="mission-top">
+                          <div class="row">
+                              <div class="col-5">
+                                 <span>Service Type</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-service-type"></span>
+                                 <input type="hidden" name="service-type" value="" class="mission-service-type">
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-5">
+                                 <span>Drone ID</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-drone-id"></span>
+                                 <input type="hidden" name="drone-id" value="" class="mission-drone-id">
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-5">
+                                 <span>Tenant ID</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-tenant-id"></span>
+                                 <input type="hidden" name="tenant-id" value="" class="mission-tenant-id">
+                              </div>
+                          </div>
+                          <!-- <div class="row">
+                              <div class="col-5">
+                                 <span>Mission ID</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-mission-id"></span>
+                                 <input type="hidden" name="mission-id" value="" class="mission-mission-id">
+                              </div>
+                          </div> -->
+                          <div class="row mission-name">
+                             <div class="col-12">
+                                <span class="mission-mission-name"></span>
+                                <input type="hidden" name="mission-name" value="" class="mission-mission-name">
+                                <!-- <textarea name="name" type="text" style="display: none"></textarea>
+                                <i class="fas fa-edit mission-name-edit"></i> -->
+                             </div>
+                          </div>
+                          <div class="row">
+                             <div class="col-9">
+                                <span class="mission-address"></span>
+                                <div style="margin-top: 8px;">
+                                   <span class="mission-lat"></span>
+                                   <span class="mission-lon"></span>
+                                </div>
+                                <input name="lat" type="hidden" value="" class="mission-lat">
+                                <input name="lon" type="hidden" value="" class="mission-lon">
+                             </div>
+                          </div>
+                       </div>
+                       <div class="mission-waypoints">
+                            <div class="mission-settings">
+                              <div class="d-flex justify-content-between align-items-center">
+                                 <div class="title">
+                                    <b>Global Settings</b>
+                                 </div>
+                              </div>
+                              <div class="collapse spoiler">
+                                <div class="settings-content">
+                                    <div class="row">
+                                       <div class="col-2">
+                                          <span>Frame</span>
+                                       </div>
+                                       <div class="col-10">
+                                          <select class="frame-select custom-select">
+                                             <option value="0" title="Global (WGS84) coordinate frame + MSL altitude.">Global</option>
+                                             <option value="3" title="Global (WGS84) coordinate frame + altitude relative to the home position.">Relative alt</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-5">
+                                          <span>Default Speed</span>
+                                       </div>
+                                       <div class="col-4 counter">
+                                          <button tabindex="-1" class="default-speed-minus">-</button>
+                                          <input value="" type="text" class="default-speed">
+                                          <button tabindex="-1" class="default-speed-plus">+</button>
+                                       </div>
+                                       <div class="col-3">
+                                          <button tabindex="-1" class="apply-default-speed">Apply</button>
+                                       </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-5">
+                                          <span>Default terrain alt</span>
+                                       </div>
+                                       <div class="col-4 counter">
+                                          <button tabindex="-1" class="default-alt-minus">-</button>
+                                          <input value="" type="text" class="default-alt">
+                                          <button tabindex="-1" class="default-alt-plus">+</button>
+                                       </div>
+                                       <div class="col-3">
+                                          <button tabindex="-1" class="apply-default-alt">Apply</button>
+                                       </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-5">
+                                          <span>Default HitRad</span>
+                                       </div>
+                                       <div class="col-4 counter">
+                                          <button tabindex="-1" class="default-wp-radius-minus">-</button>
+                                          <input value="" type="text" class="default-wp-radius">
+                                          <button tabindex="-1" class="default-wp-radius-plus">+</button>
+                                       </div>
+                                       <div class="col-3">
+                                          <button tabindex="-1" class="apply-default-wp-radius">Apply</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>  
+                       </div>
+                       <div class="mission-bottom">
+                           <div class="row">
+                              <div class="col-5">
+                                 <button tabindex="-1" class="collapse-all">Collapse -</button>
+                              </div>
+                              <div class="col-6">
+                                 <button tabindex="-1" class="expand-all">Expand +</button>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-5">
+                                 <button tabindex="-1" class="hide-mission">Hide Mission</button>
+                              </div>
+                              <div class="col-6">
+                                 <button tabindex="-1" class="show-mission">Show Mission</button>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-5">
+                                 <span>Waypoints</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-waypoints-count">0</span>
+                                 <input type="hidden" name="waypoints" value="0" class="mission-waypoints-count">
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-5">
+                                 <span>Duration</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-duration">0</span>
+                                 <input type="hidden" name="duration" value="0" class="mission-duration">
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-5">
+                                 <span>Distance</span>
+                              </div>
+                              <div class="col-6">
+                                 <span class="mission-distance">0</span>
+                                 <input type="hidden" name="distance" value="0" class="mission-distance">
+                              </div>
+                           </div>
+                           <div class="btn-group mt-2 mission-menu-group" role="group">
+                              <div class="button-group">
+                                 <button type="submit" class="mission-form-submit btn btn-primary">Save</button>
+                                 <button type="submit" class="mission-form-clean btn btn-secondary">Clean</button>
+                              </div>
+                              <!-- <button type="submit" class="mission-form-simulate btn btn-secondary">Simulate</button> -->
+                           </div>
+                           <div class="btn-group mt-2 mission-menu-group simulation" role="group">
+                              <p class="simulation_text">Simulation</p>
+                              <div class="button-group">
+                                 <button type="submit" class="mission-form-simulate btn btn-primary">Start</button>
+                                 <button type="submit" class="mission-form-pause btn btn-secondary">Pause</button>
+                                 <button type="submit" class="mission-form-stop btn btn-secondary">Clear</button>
+                                 <!-- <button type="submit" class="mission-form-reset btn btn-secondary">Reset</button> -->
+                              </div>
+                           </div>
+                       </div>
+                       <input type="hidden" name="mission" value="{}" class="mission-json">
+                    </form>
+                 </template>
+                 <canvas id="cropCanvas" style="display: none"></canvas>
+                 <div class="map-container">
+                    <div id="cesiumContainer" style="height: calc(100vh - 62px)">
+                       
+                    </div>
+                    <form class="mission-form closed" action="/missions/create/" method="post" enctype="multipart/form-data">
+                       <div class="mission-top">
+                          
+                       </div>
+                       <div class="mission-waypoints">
+                          <div class="mission-settings">
+                             
+                          </div>
+                       </div>
+                       <div class="mission-bottom">
+                       </div>
+                       <input type="hidden" name="mission" value="{}" class="mission-json">
+                    </form>
+                 </div>
+                 <div class="alert" role="alert" style="">
+                    <span class="alert-message">Double clicking on the map to add waypoints. Double clicking on waypoint to remove it</span>
+                    <i class="fa-solid fa-xmark"></i>
+                 </div>
+                 <script id="mission-data" type="application/json">""</script>
+              </div>
+           </div>
+        </main>
+        <footer class="py-2 bg-light mt-auto">
+           <div class="container-fluid">
+              <div class="small">
+                 <div class="text-center text-muted">Drone Service Cloud
+                 </div>
+                 <div>
+                 </div>
+              </div>
+           </div>
+        </footer>
+     </div>
+  </div>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+  </a>
+  <div id="snackbar"></div>
+  <script>
+     const MISSION_NAME = ""
+     const MISSION_THUMBNAIL = "";
+     const MISSION_HAS_NAME = false;
+     const MISSION_ALLOW_EDIT = true;
+     const MISSION_MODE = "create"
+     var serviceType = "help"
+     var droneId = "007"
+     var tenantId = "x@gmail.com"
+     var missionId = ""
+     var missionName = ''
+     const MISSIONS_URL = "/missions/";
+     const NEURON_API_URL = "http://35.234.139.29/"
+     const MISSION_POINTS_UTLS = {
+         circle: "/static/circle_tire.png",
+         circleBg: "/static/circle_bg.png"
+     }
+     
+     var CESIUM_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzMWJkNmFiMi1lZmYyLTQ5ZmUtYTMwNC05Njk4ZDZmMGJhMmMiLCJpZCI6MTQ4Nzk3LCJpYXQiOjE2ODc1NzgyMzJ9.11e3lktXLvEOJTJSQmW5V4moqStiyt9xPUcYjXpMZk0";
+  </script>
+  <script>
+         function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            serviceType = params.get('serviceType');
+            droneId = params.get('droneId');
+            tenantId = params.get('tenantId');
+            missionId = params.get('missionId');
+            missionName = params.get('missionName');
+            missionDesc = params.get('missionDesc');
+            missionStartTime = params.get('missionStartTime');
+            missionEndTime = params.get('missionEndTime');
+            // console.log("Get encoded URL params:", serviceType, droneId, tenantId, missionId, missionName, missionDesc, missionStartTime, missionEndTime);
+            // console.log("access global vars after URL decoding", serviceType, droneId, tenantId, missionId, missionName, missionDesc, missionStartTime, missionEndTime);
+            // Use serviceType and droneId as needed
+         }
+         getQueryParams();
+  </script>
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="/static/vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="/static/vendor/chart.js/Chart.min.js"></script>
+  <script src="/static/vendor/sb-admin/js/scripts.js"></script>
+  <script>
+     var geocoder
+     var tries = 0
+     
+     function initMap() {
+         geocoder = new google.maps.Geocoder();
+     }
+     
+     function gmap_getLocations(pos) {
+         return new Promise(function (resolve, reject) {
+             if (geocoder) {
+                 geocoder.geocode(
+                     {'location': pos},
+                     function (results, status) {
+                         if (results && results.length > 0) {
+                             var fullName = results[0].formatted_address
+                             var firstComponent = results[0].address_components[0].short_name
+     
+                             resolve({fullName, firstComponent})
+                         }
+                     });
+             } else if (tries < 10) {
+                 // Sometimes, with a bad Internet connection, the geocoder does not appear immediately,
+                 // in order to increase the probability of obtaining a position, we set the recursion
+                 setTimeout(() => {
+                     tries ++
+                     gmap_getLocations(pos)
+                         .then((result) => {
+                             resolve(result)
+                         })
+                 }, 300)
+             }
+         })
+     }
+     
+     function airmap_getWeather(pos) {
+         return $.ajax({
+             url: "https://api.airmap.com/advisory/v1/weather?latitude=" + pos.lat + "&longitude=" + pos.lng,
+             headers: {"X-API-Key": CESIUM_ACCESS_TOKEN}
+         });
+     }
+  </script>
+  <script type="text/javascript" src="/static/assets/js/cesium/cesium-helper.js"></script>
+  <script type="text/javascript" src="/static/assets/js/cesium/cesium-mod-neuron.js"></script>
+  <script type="text/javascript" src="/static/assets/js/missions/mission-helpers.js"></script>
+  <script type="text/javascript" src="/static/assets/js/missions/mission-items.js"></script>
+  <script type="text/javascript" src="/static/assets/js/missions/mission-manager.js"></script>
+  <script type="text/javascript" src="/static/assets/js/missions/mission-menu-manager.js"></script>
+  <script src="/static/missions/js/cesium.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNfhmZ9JrVQ_gMw4EVTIeeHRSwhJlIwXg&amp;language=en&amp;region=US&amp;callback=initMap" async="" defer=""></script>
+</body>
+</html>

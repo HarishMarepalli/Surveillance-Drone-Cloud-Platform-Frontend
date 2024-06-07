@@ -1,0 +1,316 @@
+.mission-tag {
+  transition: transform 0.5s; }
+  .mission-tag.menu-opened {
+    transform: translateX(-320px); }
+
+.mission-form {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding-left: 4px;
+  padding-right: 4px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s;
+  scrollbar-color: gray transparent; }
+  .mission-form.closed {
+    transform: translateX(320px); }
+  .mission-form .mission-top {
+    padding: 8px;
+    font-size: 12px; }
+    .mission-form .mission-top .mission-name > :nth-child(1) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+    .mission-form .mission-top .mission-name .mission-name-edit {
+      cursor: pointer; }
+    .mission-form .mission-top .mission-name span {
+      font-size: 14px;
+      width: 91%; }
+    .mission-form .mission-top .weather-icon {
+      font-size: 36px; }
+    .mission-form .mission-top .mission-address {
+      line-height: 18px;
+      display: block; }
+  .mission-form .mission-waypoints {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px; }
+    .mission-form .mission-waypoints .mission-item, .mission-form .mission-waypoints .mission-settings {
+      padding: 4px 8px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      border: 1px solid white;
+      font-size: 12px; }
+      .mission-form .mission-waypoints .mission-item .delete-icon, .mission-form .mission-waypoints .mission-settings .delete-icon {
+        font-size: 18px;
+        cursor: pointer; }
+      .mission-form .mission-waypoints .mission-item .pov-delete-icon, .mission-form .mission-waypoints .mission-settings .pov-delete-icon {
+        font-size: 16px;
+        cursor: pointer; }
+    .mission-form .mission-waypoints::-webkit-scrollbar {
+      width: 6px;
+      background-color: rgba(114, 124, 109, 0.75); }
+    .mission-form .mission-waypoints::-webkit-scrollbar-track {
+      border-radius: 3px;
+      background: #ddd; }
+    .mission-form .mission-waypoints::-webkit-scrollbar-thumb:hover {
+      background-color: #222; }
+    .mission-form .mission-waypoints::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background-color: #444; }
+    .mission-form .mission-waypoints select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      padding: 0.1em 0.2em;
+      background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23fff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+      background-color: #000;
+      border-color: #fff;
+      border-radius: 0;
+      color: #fff;
+      height: auto;
+      font-size: 13px; }
+      .mission-form .mission-waypoints select:focus {
+        border-color: #fff;
+        box-shadow: none; }
+      .mission-form .mission-waypoints select:disabled {
+        background-color: #000;
+        background: none;
+        border-color: grey; }
+    .mission-form .mission-waypoints > div {
+      align-items: center; }
+    .mission-form .mission-waypoints .title {
+      margin: -4px 8px -4px -8px;
+      padding: 4px 8px;
+      cursor: pointer;
+      flex: 1; }
+    .mission-form .mission-waypoints .extra-title {
+      cursor: pointer; }
+    .mission-form .mission-waypoints .validation-fail-input {
+      border-bottom: 1px solid red;
+      padding-right: 15px; }
+  .mission-form .mission-bottom {
+    border: 3px solid white;
+    margin-top: 3px;
+    margin-bottom: 1px;
+    padding: 8px;
+    font-size: 14px; }
+  .mission-form .row {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    align-items: center; }
+    .mission-form .row > div {
+      position: relative;
+      width: 100%; }
+    .mission-form .row input {
+      height: 21px;
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid grey;
+      color: white;
+      outline: none; }
+      .mission-form .row input:disabled {
+        opacity: 0.7; }
+      .mission-form .row input:focus {
+        border-bottom-width: 2px; }
+      .mission-form .row input button:disabled {
+        opacity: 0.7; }
+  .mission-form .counter {
+    display: flex; }
+    .mission-form .counter button {
+      width: 20%;
+      height: 21px;
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      outline: none;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .mission-form .counter input {
+      width: 60%;
+      margin-left: 8px;
+      margin-right: 8px; }
+  .mission-form .extra-params {
+    padding-bottom: 12px; }
+    .mission-form .extra-params > div:first-child {
+      margin-top: 0; }
+    .mission-form .extra-params > div:last-child {
+      margin-bottom: 0; }
+
+.validation-icon-hint {
+  margin-left: 5px;
+  position: absolute;
+  top: 4px;
+  right: 0.9rem;
+  color: orange; }
+
+.tooltip .arrow {
+  display: none; }
+
+.mission-menu-tag {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  top: 40px;
+  left: -42px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  border-radius: 8px 0 0 8px; }
+  .mission-menu-tag:hover {
+    background-color: #282828; }
+    .mission-menu-tag:hover .mission-controls > div {
+      transform: scale(1) translate(0, 0);
+      opacity: 1; }
+  .mission-menu-tag .mission-collapse {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex; }
+    .mission-menu-tag .mission-collapse i {
+      transition: transform 0.5s; }
+    .mission-menu-tag .mission-collapse.closed i {
+      transform: rotate(180deg); }
+  .mission-menu-tag .mission-controls > div {
+    position: absolute;
+    left: -11.76471px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #282828;
+    opacity: 0;
+    transform: scale(0);
+    transition-property: transform, opacity;
+    transform-origin: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer; }
+    .mission-menu-tag .mission-controls > div:hover {
+      background-color: #505050; }
+  .mission-menu-tag .mission-controls > :nth-child(1) {
+    transition-duration: 0.3s;
+    top: -12px;
+    left: -9.76471px; }
+  .mission-menu-tag .mission-controls > :nth-child(2) {
+    transition-duration: 0.4s;
+    top: 10px; }
+    .mission-menu-tag .mission-controls > :nth-child(2) i {
+      position: relative;
+      top: -1px; }
+  .mission-menu-tag .mission-controls > :nth-child(3) {
+    transition-duration: 0.5s;
+    top: 32px;
+    left: -9.76471px; }
+  .mission-menu-tag .mission-controls .hide-mission i {
+    position: absolute;
+    transition: opacity 1s; }
+  .mission-menu-tag .mission-controls .hide-mission :nth-child(1) {
+    opacity: 1; }
+  .mission-menu-tag .mission-controls .hide-mission :nth-child(2) {
+    opacity: 0; }
+  .mission-menu-tag .mission-controls .hide-mission.mission-hiden {
+    opacity: 1;
+    transform: scale(1);
+    transition: none; }
+    .mission-menu-tag .mission-controls .hide-mission.mission-hiden :nth-child(1) {
+      opacity: 0; }
+    .mission-menu-tag .mission-controls .hide-mission.mission-hiden :nth-child(2) {
+      opacity: 1;
+      transition: 0; }
+
+.mission-menu-group {
+  flex-direction: column;
+  width: 100%; }
+
+.simulation_text
+{
+  margin: auto;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.button-group
+{
+  display: flex;
+}
+  .mission-menu-group:not(:hover) button:nth-child(1) {
+    width: 65%; }
+  .mission-menu-group button {
+    transition: width 1s;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .mission-menu-group button:nth-child(1) {
+      width: 35%; }
+    .mission-menu-group button:nth-child(2) {
+      width: 35%; }
+    .mission-menu-group button:hover {
+      width: 65%; }
+  .mission-menu-group .spinner-border {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-width: 0.2em;
+    min-width: 1.3rem; }
+
+#crop-canvas {
+  display: none; }
+
+.notransition {
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+  transition: none !important; }
+
+  /* CSS */
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

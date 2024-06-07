@@ -1,0 +1,53 @@
+.features-selector {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+  padding: 0.3em;
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 0.35em;
+  cursor: pointer; }
+  .features-selector #neuron-feature {
+    width: 18em; }
+  .features-selector input[type="checkbox"] {
+    margin-top: 0.4em;
+    margin-right: 0.4em; }
+  .features-selector div button {
+    display: block;
+    width: 100%; }
+    .features-selector div button table {
+      width: 100%; }
+    .features-selector div button td:first-child {
+      text-align: left; }
+    .features-selector div button td:last-child {
+      text-align: right; }
+    .features-selector div button:hover {
+      background-color: rgba(20, 20, 20, 0.85); }
+  .features-selector div > div {
+    margin-left: 1rem;
+    margin-top: 0.2rem; }
+    .features-selector div > div label {
+      background-color: rgba(40, 40, 40, 0.85);
+      padding: 6px;
+      margin: 0;
+      cursor: pointer; }
+      .features-selector div > div label:hover {
+        background-color: rgba(0, 0, 0, 0.85); }
+      .features-selector div > div label:first-child {
+        margin-top: 0.1rem;
+        border-radius: 0.35em 0.35em 0 0; }
+      .features-selector div > div label:last-child {
+        border-radius: 0 0 0.35em 0.35em; }
+      .features-selector div > div label:only-child {
+        border-radius: 0.35em; }
+  .features-selector > button {
+    padding: 2px; }
+    .features-selector > button:hover {
+      background-color: rgba(20, 20, 20, 0.85); }
+  .features-selector button:hover {
+    color: #ddd; }
+  .features-selector button img {
+    height: 40px; }
+  .features-selector .btn:focus {
+    box-shadow: none; }
+  .features-selector * {
+    color: #fff; }
